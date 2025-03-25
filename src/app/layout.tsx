@@ -5,6 +5,7 @@ import ReduxProvider from "@/Redux/provider";
 import ReactQueryProvider from "@/ReactQuery/provider";
 import LoginCheck from "./Providers/login-check";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
 
 
         {children}
+        <Toaster />
         </LoginCheck>
         </ReactQueryProvider>
         </ReduxProvider>

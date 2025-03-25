@@ -27,7 +27,7 @@ axiosInstance.interceptors.request.use(
           isRefreshing = true;
           try {
          
-            const response:any = await axios.post(`${apiUrl}api/user/refresh`, {}, { withCredentials: true });
+            const response:any = await axios.post(`${apiUrl}user/refresh_token`, {}, { withCredentials: true });
           
            
           } catch (error) {

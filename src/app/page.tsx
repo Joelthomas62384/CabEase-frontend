@@ -49,9 +49,15 @@ const reverseGeocode = async (lat: number, lon: number): Promise<string | null> 
   }
 };
 
+const locationDefault = {
+  place : "",
+  latitude : "",
+  longitude : "",
+}
+
 const Page = () => {
-  const [fromInput, setFromInput] = useState("");
-  const [toInput, setToInput] = useState("");
+  const [fromInput, setFromInput] = useState(locationDefault);
+  const [toInput, setToInput] = useState(locationDefault);
   const [fromSelected, setFromSelected] = useState(false);
   const [toSelected, setToSelected] = useState(false);
   const [locationFetched, setLocationFetched] = useState(false);
@@ -65,7 +71,11 @@ const Page = () => {
           const { latitude, longitude } = position.coords;
           const placeName = await reverseGeocode(latitude, longitude);
           if (placeName) {
-            setFromInput(placeName);
+            setFromInput({
+              place : placeName,
+              latitude : latitude.toString(),
+              longitude : longitude.toString(),
+            });
             setFromSelected(true);
             setLocationFetched(true);
           }
@@ -80,21 +90,21 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (!locationFetched && !fromInput) {
+    if (!locationFetched && !fromInput.place) {
       fetchCurrentLocation();
     }
   }, [locationFetched, fromInput]);
 
   const { data: fromSuggestions, isLoading: fromLoading } = useQuery({
     queryKey: ["fromPlace", fromInput],
-    queryFn: () => fetchPlaces(fromInput),
-    enabled: fromInput.length > 2,
+    queryFn: () => fetchPlaces(fromInput.place),
+    enabled: fromInput.place.length > 2,
   });
 
   const { data: toSuggestions, isLoading: toLoading } = useQuery({
     queryKey: ["toPlace", toInput],
-    queryFn: () => fetchPlaces(toInput),
-    enabled: toInput.length > 2, 
+    queryFn: () => fetchPlaces(toInput.place),
+    enabled: toInput.place.length > 2, 
   });
 
   return (
@@ -106,13 +116,13 @@ const Page = () => {
             <CommandInput
               className="placeholder:text-gray-400 p-3"
               placeholder="From"
-              value={fromInput}
+              value={fromInput.place}
               onValueChange={(value) => {
-                setFromInput(value);
+                setFromInput({...fromInput, place : value});
                 setFromSelected(false);
               }}
             />
-            {!fromSelected && fromInput.length > 2 && (
+            {!fromSelected && fromInput.place.length > 2 && (
               <CommandList className="rounded-b-lg shadow-xl">
                 {fromLoading ? (
                   <div className="flex justify-center py-4">
@@ -127,7 +137,11 @@ const Page = () => {
                           key={place.lat + place.lon}
                           className="hover:!bg-gray-300 cursor-pointer transition-all"
                           onSelect={() => {
-                            setFromInput(place.name);
+                            setFromInput({
+                              place : place.name,
+                              latitude : place.lat,
+                              longitude : place.lon,
+                            });
                             setFromSelected(true);
                           }}
                         >
@@ -161,13 +175,13 @@ const Page = () => {
             <CommandInput
               className="placeholder:text-gray-400 p-3"
               placeholder="To"
-              value={toInput}
+              value={toInput.place}
               onValueChange={(value) => {
-                setToInput(value);
+                setToInput({...toInput, place:value});
                 setToSelected(false);
               }}
             />
-            {!toSelected && toInput.length > 2 && (
+            {!toSelected && toInput.place.length > 2 && (
               <CommandList className="rounded-b-lg shadow-xl">
                 {toLoading ? (
                   <div className="flex justify-center py-4">
@@ -182,7 +196,11 @@ const Page = () => {
                           key={place.lat + place.lon}
                           className="hover:!bg-gray-300 cursor-pointer transition-all"
                           onSelect={() => {
-                            setToInput(place.name);
+                            setToInput({
+                              place : place.name,
+                              latitude : place.lat,
+                              longitude : place.lon,
+                            });
                             setToSelected(true);
                           }}
                         >

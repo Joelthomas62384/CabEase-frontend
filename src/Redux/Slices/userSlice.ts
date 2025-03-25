@@ -10,10 +10,9 @@ type InitialStateType = {
 
 
 
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     user : {
         id: '',
-        full_name : '',
         mobile : '',
         username : '',
         is_driver: false,
@@ -37,4 +36,5 @@ const userSlice = createSlice({
 
 
 export const { setUser, setLoggedIn } = userSlice.actions
+
 export default userSlice.reducer

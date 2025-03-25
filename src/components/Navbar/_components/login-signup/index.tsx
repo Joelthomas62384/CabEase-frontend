@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,16 +8,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import LoginForm from "../loginform";
+import LoginForm from "./loginform";
+import RegisterForm from "./registerform";
 
 type Props = {
   children: React.ReactElement;
 };
 
 const LoginSignUpModal = ({ children }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-white shadow-2xl">
         <DialogHeader>
@@ -34,13 +36,10 @@ const LoginSignUpModal = ({ children }: Props) => {
           </TabsList>
 
           <TabsContent value="login">
-          <LoginForm />
+            <LoginForm onSuccess={() => setIsOpen(false)} />
           </TabsContent>
           <TabsContent value="signup">
-            <div className="p-4">
-
-              
-            </div>
+            <RegisterForm onSuccess={() => setIsOpen(false)} />
           </TabsContent>
         </Tabs>
       </DialogContent>

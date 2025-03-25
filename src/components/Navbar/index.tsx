@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 import { Button } from '../ui/button';
 import LoginSignUpModal from './_components/login-signup';
+import ProfilePopOver from './_components/profile-popover';
 
 const Navbar = () => {
 
@@ -34,14 +35,17 @@ const Navbar = () => {
       <Link className='text-yellow-50 font-bold hover:text-yellow-400 transition'  href={'/booking'}>Booking</Link>
       <Link className='text-yellow-50 font-bold hover:text-yellow-400 transition'  href={'/booking'}>Register Cab</Link>
 { isLoggedIn && user ?
-    ( <Avatar className='cursor-pointer shadow-amber-50 select-none'>
+    ( <ProfilePopOver>
+      <Avatar className='cursor-pointer shadow-amber-50 select-none'>
         <AvatarImage src="/user-avatar.png" alt="User Avatar" />
         <AvatarFallback className='text-white bg-amber-700'>JD</AvatarFallback>
-      </Avatar>) :
+      </Avatar>
+    </ProfilePopOver>
+    ) :
       (
         <LoginSignUpModal>
 
-        <Button className=' bg-yellow-300 shadow-2xl hover:bg-yellow-400 cursor-pointer '>Login</Button>
+        <Button className=' bg-yellow-300 shadow-2xl text-black hover:bg-yellow-400 cursor-pointer '>Login</Button>
         </LoginSignUpModal>
       )
       
