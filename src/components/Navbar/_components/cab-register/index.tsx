@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import axiosInstance from "@/axios";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setDriver } from "@/Redux/Slices/userSlice";
 
 const cabSchema = z.object({
   car_number: z.string().min(1, "Car number is required"),
@@ -43,6 +45,7 @@ type Props = {
 };
 
 const CabRegister = ({ children }: Props) => {
+  const dispatch = useDispatch()
   const form = useForm<CabFormData>({
     resolver: zodResolver(cabSchema),
     defaultValues: {
@@ -92,6 +95,8 @@ const CabRegister = ({ children }: Props) => {
         toast.success("Cab Registered Successfully");
         queryClient.invalidateQueries({ queryKey: ["user"] });
         queryClient.invalidateQueries({ queryKey: ["cabs"] });
+        dispatch(setDriver(true))
+        
       } else {
         console.error("Failed to register cab");
       }

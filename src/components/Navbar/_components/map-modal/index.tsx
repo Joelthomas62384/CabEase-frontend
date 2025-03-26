@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface RouteMapProps {
   start: { lat: number; lng: number };
@@ -48,7 +48,7 @@ const RouteMapModal: React.FC<ModalProps> = ({ start, end, children }) => {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-[600px] max-w-full">
-        <h2 className="text-lg font-semibold mb-4">Route Map</h2>
+      <DialogTitle>Maps</DialogTitle>
         <RouteMap start={start} end={end} />
       </DialogContent>
     </Dialog>

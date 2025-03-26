@@ -152,7 +152,7 @@ end={{
     lat: bookingData.end_location.latitude,
     lng: bookingData.end_location.longitude,
 }}
-/> *
+/> 
           </div>
         )}
       </PopoverContent>
