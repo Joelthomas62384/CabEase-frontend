@@ -32,10 +32,13 @@ const userSlice = createSlice({
         setLoggedIn: (state, action) => {
             state.isLoggedIn = action.payload
         },
+        setDriver : (state, action)=>{
+            state.user = {...state.user , is_driver: action.payload}
+        }
     },
 })
 
 
-export const { setUser, setLoggedIn } = userSlice.actions
+export const { setUser, setLoggedIn , setDriver} = userSlice.actions
 
 export default userSlice.reducer

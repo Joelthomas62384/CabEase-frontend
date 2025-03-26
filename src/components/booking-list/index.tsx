@@ -7,6 +7,8 @@ import RiderDetail from "../Navbar/_components/admin-modal/_components/rider-det
 import axiosInstance from "@/axios";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setDriver } from "@/Redux/Slices/userSlice";
 
 type Props = {
   arr: any;
@@ -16,6 +18,7 @@ type Props = {
 
 const SearchDriver = ({ arr, from, to }: Props) => {
     const queryClient =  useQueryClient()
+    const dispatch = useDispatch()
   const handleBooking = async ( cab: any) => {
     console.log(cab , from , to)
     try {
@@ -27,6 +30,7 @@ const SearchDriver = ({ arr, from, to }: Props) => {
       });
       queryClient.invalidateQueries({ queryKey: ["booking"] });
       queryClient.invalidateQueries({ queryKey: ["my-booking"] });
+      dispatch(setDriver(true))
       toast.success("Cab booked successfully!");
       console.log("Booking Response:", response.data);
     } catch (error:any) {
