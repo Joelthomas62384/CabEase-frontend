@@ -12,6 +12,8 @@ import LoginSignUpModal from './_components/login-signup';
 import ProfilePopOver from './_components/profile-popover';
 import CabRegister from './_components/cab-register';
 import AdminModal from './_components/admin-modal';
+import PopoverDriver from './_components/popover-driver';
+import PopoverUserModal from './_components/popover-user-modal';
 
 const Navbar = () => {
 
@@ -34,7 +36,9 @@ const Navbar = () => {
       
      <div className='flex items-center gap-3'>
       <Link className='text-yellow-50 font-bold hover:text-yellow-400 transition'  href={'/'}>Home</Link>
-      <Link className='text-yellow-50 font-bold hover:text-yellow-400 transition'  href={'/booking'}>Booking</Link>
+     { user.is_driver && <PopoverDriver children={<div className='text-yellow-50 font-bold hover:text-yellow-400 transition cursor-pointer' >Cab</div>}/>  }
+     
+      <PopoverUserModal children={ <div className='text-yellow-50 font-bold hover:text-yellow-400 transition cursor-pointer' >Booking</div> } />
 {   !user.is_driver &&   <CabRegister children={<span className='text-yellow-50 font-bold hover:text-yellow-400 transition'>Cab Register</span>}/>}
      {
       user.is_superuser && <AdminModal children={<span className='text-yellow-50 font-bold hover:text-yellow-400 transition'>Admin</span>}/> 
@@ -44,7 +48,7 @@ const Navbar = () => {
     ( <ProfilePopOver>
       <Avatar className='cursor-pointer shadow-amber-50 select-none'>
         <AvatarImage src="/user-avatar.png" alt="User Avatar" />
-        <AvatarFallback className='text-white bg-amber-700'>JD</AvatarFallback>
+        <AvatarFallback className='text-white bg-amber-700'>{user.full_name[0]}</AvatarFallback>
       </Avatar>
     </ProfilePopOver>
     ) :

@@ -14,7 +14,7 @@ export const initialState: InitialStateType = {
     user : {
         id: '',
         mobile : '',
-        username : '',
+        full_name : '',
         is_driver: false,
         is_superuser: false,
     },

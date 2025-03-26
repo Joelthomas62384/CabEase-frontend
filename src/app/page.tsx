@@ -17,6 +17,7 @@ import axios from "axios";
 import { Spinner } from "@/components/ui/Spinner";
 import axiosInstance from "@/axios";
 import SearchDriver from "@/components/booking-list";
+import { toast } from "sonner";
 
 type Place = {
   name: string;
@@ -123,12 +124,18 @@ const Page = () => {
       },
       pickup_time : new Date().toISOString(),
     }
-    const response = await axiosInstance.post('cabs/get-riders', data)
-    if (response.status === 200){
-      console.log(response.data)
-      setgetSearch(response.data)
-    } else {
-      console.error("Failed to get riders")
+    try{
+
+      const response = await axiosInstance.post('cabs/get-riders', data)
+      if (response.status === 200){
+        console.log(response.data)
+        setgetSearch(response.data)
+      } else {
+        console.error("Failed to get riders")
+      }
+    }catch(error){
+      toast.warning("No Cabs available")
+
     }
   }
 
@@ -245,7 +252,7 @@ const Page = () => {
         </div>
 
       <div className="mt-9">
-      <SearchDriver arr={getSearch} />
+      <SearchDriver arr={getSearch} from={fromInput} to={toInput} />
       </div>
       </div>
     </>

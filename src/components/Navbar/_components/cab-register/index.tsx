@@ -91,6 +91,7 @@ const CabRegister = ({ children }: Props) => {
         console.log("Cab registered successfully");
         toast.success("Cab Registered Successfully");
         queryClient.invalidateQueries({ queryKey: ["user"] });
+        queryClient.invalidateQueries({ queryKey: ["cabs"] });
       } else {
         console.error("Failed to register cab");
       }
