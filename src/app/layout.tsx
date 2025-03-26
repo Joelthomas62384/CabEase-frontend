@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/Redux/provider";
 import ReactQueryProvider from "@/ReactQuery/provider";
-import LoginCheck from "./Providers/login-check";
+import LoginCheck from "../Providers/login-check";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
+import LocationProvider from "@/Providers/location-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,8 +40,10 @@ export default function RootLayout({
         <Navbar />
         <LoginCheck>
 
+        <LocationProvider>
 
         {children}
+        </LocationProvider>
         <Toaster />
         </LoginCheck>
         </ReactQueryProvider>

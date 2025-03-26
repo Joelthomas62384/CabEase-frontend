@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Spinner } from "@/components/ui/Spinner";
+import axiosInstance from "@/axios";
+import SearchDriver from "@/components/booking-list";
 
 type Place = {
   name: string;
@@ -62,6 +64,7 @@ const Page = () => {
   const [toSelected, setToSelected] = useState(false);
   const [locationFetched, setLocationFetched] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false); 
+  const [getSearch, setgetSearch] = useState([])
 
   const fetchCurrentLocation = () => {
     if ("geolocation" in navigator) {
@@ -107,9 +110,31 @@ const Page = () => {
     enabled: toInput.place.length > 2, 
   });
 
+
+  const onSearchClick = async ()=>{
+    const data = {
+      from : {
+        latitude : fromInput.latitude,
+        longitude : fromInput.longitude,
+      },
+      to : {
+        latitude : toInput.latitude,
+        longitude : toInput.longitude,
+      },
+      pickup_time : new Date().toISOString(),
+    }
+    const response = await axiosInstance.post('cabs/get-riders', data)
+    if (response.status === 200){
+      console.log(response.data)
+      setgetSearch(response.data)
+    } else {
+      console.error("Failed to get riders")
+    }
+  }
+
   return (
     <>
-      <Banner />
+      <Banner /> 
       <div className="w-full max-w-6xl mx-auto mt-10 p-4 rounded-xl">
         <div className="flex items-start space-x-3">
           <Command className="w-full border border-gray-300 rounded-lg shadow-xl">
@@ -214,10 +239,14 @@ const Page = () => {
             )}
           </Command>
 
-          <Button className="bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 cursor-pointer shadow-3xl">
+          <Button onClick={onSearchClick} className="bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 cursor-pointer shadow-3xl">
             Search
           </Button>
         </div>
+
+      <div className="mt-9">
+      <SearchDriver arr={getSearch} />
+      </div>
       </div>
     </>
   );

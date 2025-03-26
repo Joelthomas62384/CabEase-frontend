@@ -49,9 +49,7 @@ const ProfilePopOver = ({children}: Props) => {
   <DropdownMenuContent>
     <DropdownMenuLabel>My Account</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem onClick={()=>{
-        router.push('/profile')
-    }}>Profile</DropdownMenuItem>
+    
     <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
     
   </DropdownMenuContent>

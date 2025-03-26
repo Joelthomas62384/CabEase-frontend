@@ -16,6 +16,7 @@ export const initialState: InitialStateType = {
         mobile : '',
         username : '',
         is_driver: false,
+        is_superuser: false,
     },
     isLoggedIn : false,
 }
