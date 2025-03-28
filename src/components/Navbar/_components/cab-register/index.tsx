@@ -74,7 +74,8 @@ const CabRegister = ({ children }: Props) => {
         formData.append("car_details[model]", data.car_details.model || "");
         formData.append("car_details[seats]", data.car_details.seats?.toString() || "4");
         formData.append("car_details[safety_features]", data.car_details.safety_features || "");
-        formData.append("price_per_km", "100");
+        const randomPrice = Math.floor(Math.random() * (200 - 50 + 1)) + 50;
+        formData.append("price_per_km",randomPrice.toString());
     }
 
     // Append files
@@ -100,7 +101,8 @@ const CabRegister = ({ children }: Props) => {
       } else {
         console.error("Failed to register cab");
       }
-    } catch (error) {
+    } catch (error:any) {
+      toast(error?.response?.data?.detail)
       console.error("Error submitting form", error);
     }
   };

@@ -66,7 +66,7 @@ const SearchDriver = ({ arr, from, to }: Props) => {
                 Distance: {arr.trip_distance_km.toFixed(2)} km
               </div>
               <div className="text-xs text-gray-600">
-                Estimated Price: ₹{arr.estimated_price.toFixed(2)}
+                Estimated Price: ₹{item?.estimated_price.toFixed(2)|| ''}
               </div>
             </div>
 
